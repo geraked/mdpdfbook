@@ -1,6 +1,7 @@
+from os import path, system
+import os
 import parse
 import convert
-from os import path
 
 
 def main():
@@ -16,6 +17,7 @@ def main():
     except Exception as e:
         print(60 * '-')
         print(e)
+    system("PAUSE")
 
 
 if __name__ == '__main__':

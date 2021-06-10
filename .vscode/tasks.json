@@ -1,0 +1,42 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Create .env",
+            "type": "shell",
+            "command": "rm -r .env; cls; python -m venv .env; .env/Scripts/activate; pip install -r requirements.txt",
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true
+            },
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": ".env/Scripts/activate; python mdpdfbook",
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true,
+                "focus": true
+            }
+        },
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "rm -r dist; rm -r build; rm *.spec; cls; ../.env/Scripts/activate; pyinstaller --noconfirm --clean --onefile --name 'mdpdfbook' __main__.py; rm -r build; rm *.spec",
+            "options": {
+                "cwd": "mdpdfbook"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+    ]
+}

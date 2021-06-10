@@ -1,0 +1,3 @@
+mdpdf
+requests
+pyinstaller
