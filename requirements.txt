@@ -1,3 +1,5 @@
 mdpdf
 requests
+pycryptodome
+pypiwin32
 pyinstaller

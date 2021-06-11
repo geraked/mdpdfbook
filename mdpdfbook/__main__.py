@@ -1,11 +1,11 @@
 from os import path, system
 import os
-import parse
+import req
 import convert
 
 
 def main():
-    parse.main()
+    req.main()
     folder = input(
         'Enter the directory path containing SUMMARY.md or other *.md files:\n')
     try:

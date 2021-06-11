@@ -1,0 +1,61 @@
+name: CI
+on:
+  push:
+    tags: 'v*'
+  workflow_dispatch:
+jobs:
+  build:
+    if: github.event.base_ref == 'refs/heads/master'
+    runs-on: windows-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+          architecture: 'x86'
+      
+      - name: Get Python Version
+        shell: powershell
+        run: python -V
+
+      - name: Create .env
+        shell: powershell
+        run: |
+          rm -r .env -ErrorAction Ignore;
+          python -m venv .env;
+          .env/Scripts/activate;
+          pip install -r requirements.txt
+
+      - name: Build
+        shell: powershell
+        working-directory: mdpdfbook
+        run: |
+          rm -r dist -ErrorAction Ignore;
+          rm -r build -ErrorAction Ignore;
+          rm *.spec -ErrorAction Ignore;
+          ../.env/Scripts/activate;
+          pyinstaller --noconfirm --clean --onefile --name 'mdpdfbook' __main__.py;
+          rm -r build -ErrorAction Ignore;
+          rm *.spec -ErrorAction Ignore
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: mdpdfbook/dist/mdpdfbook.exe
+          asset_name: mdpdfbook.exe
+          asset_content_type: application/octet-stream
