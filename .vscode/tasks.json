@@ -25,7 +25,7 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": "rm -r dist; rm -r build; rm *.spec; cls; ../.env/Scripts/activate; pyinstaller --noconfirm --clean --onefile --name 'mdpdfbook' __main__.py; rm -r build; rm *.spec",
+            "command": "rm -r dist; rm -r build; rm *.spec; rm ../version.txt; cls; ../.env/Scripts/activate; create-version-file ../metadata.yml --outfile ../version.txt; pyinstaller --noconfirm --clean --onefile --icon ../favicon.ico --version-file ../version.txt --name 'mdpdfbook' __main__.py; rm -r build; rm *.spec; rm ../version.txt",
             "options": {
                 "cwd": "mdpdfbook"
             },

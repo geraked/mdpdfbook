@@ -34,10 +34,13 @@ jobs:
           rm -r dist -ErrorAction Ignore;
           rm -r build -ErrorAction Ignore;
           rm *.spec -ErrorAction Ignore;
+          rm ../version.txt -ErrorAction Ignore;
           ../.env/Scripts/activate;
-          pyinstaller --noconfirm --clean --onefile --name 'mdpdfbook' __main__.py;
+          create-version-file ../metadata.yml --outfile ../version.txt;
+          pyinstaller --noconfirm --clean --onefile --icon ../favicon.ico --version-file ../version.txt --name 'mdpdfbook' __main__.py;
           rm -r build -ErrorAction Ignore;
-          rm *.spec -ErrorAction Ignore
+          rm *.spec -ErrorAction Ignore;
+          rm ../version.txt -ErrorAction Ignore
 
       - name: Create Release
         id: create_release

@@ -1,7 +1,8 @@
-import sys
 import re
 import shutil
-from os import path, walk, remove
+import sys
+from os import path, remove, walk
+
 from mdpdf.converter import Converter
 from mdpdf.headfoot import Header
 
